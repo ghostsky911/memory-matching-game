@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>記憶配對遊戲</title>
+    <style>
+        * {
+            font-family: Arial;
+        }
+        header, footer {
+            background-color: #666666;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 10px;
+        }
+        main {
+            padding: 10px 0;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+            width: 400px;
+            margin: auto;
+        }
+        .grid-item {
+            display: grid;
+            width: 80px;
+            height: 80px;
+            justify-content: center;
+            align-items: center;
+            background-color: #F0F0F0;
+            cursor: pointer;
+            font-size: 60px;
+            text-indent:500px;
+            overflow: hidden;
+        }
+        .showcard {
+           text-indent:0px;
+           
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1>記憶配對遊戲</h1> <!-- 頁面標題 -->
+</header>
+
+<main>
+  <div class="grid-container" id="grid-container">
+   
+  </div>
+</main>
+
+<footer>
+ 
+    <b>單元五練習三 (2024.05.11)</b>
+</footer>
+<script>
+    const emojis=['😀','😳','😭','☺️','😆','🙃','😋','😗'];
+    const cards =[...emojis,...emojis];
+    cards.sort(() => 0.5 - Math.random());
+    var matchedPairs=0;
+    var clickedCard = null;
+   
+   
+    function toggleGridSelection(event) {
+        var grid = event.target;
+   
+        grid.classList.add('showcard');
+       
+       if(clickedCard === null ) {
+          clickedCard = grid;
+          } else {
+         
+          if(clickedCard.textContent == grid.textContent){
+          matchedPairs++;
+          clickedCard = null;
+          if (matchedPairs == 8){
+         
+setTimeout(() => {
+
+alert('恭喜')
+
+}, 1000)
+          }
+          } else {
+          setTimeout(() => {
+          grid.classList.remove('showcard');
+          clickedCard.classList.remove('showcard');
+          clickedCard = null;
+          }, 500)
+         
+       
+          }
+          }
+         
+         
+    }
+   const gridSize = 4; //prompt('請輸入網格尺寸（例如：3表示3x3網格): ');
+   const gridcontainer = document.getElementById('grid-container');
+   gridcontainer.style.gridTemplateColumns =`repeat(${gridSize},1fr)`;
+   gridcontainer.style.width = `${gridSize*80 + (gridSize-1)*10}px`;
+   
+   for(let i =1; i <=gridSize * gridSize; i++){
+   const griditem = document.createElement('div');
+   griditem.className = 'grid-item';
+   griditem.textContent = cards[i-1];
+   gridcontainer.appendChild(griditem);
+   }
+   
+     document.querySelectorAll('.grid-item').forEach(function (grid) {
+        grid.addEventListener('click', toggleGridSelection);
+    });
+   
+ 
+</script>
+</body>
+</html>
